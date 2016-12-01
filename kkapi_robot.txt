@@ -1,0 +1,29 @@
+*** Settings ***
+Library    Collections
+Library    String
+Library    OperatingSystem
+
+*** Variables ***
+
+${env2}    /usr/bin
+${print_level}    None
+${account}   0932208479
+${pw}        870cd34387781acbb5e3c82097dead41
+${kk_ip}     www.kkbox.com/play
+
+${XSRF-TOKEN}      mphio4s3kaga8slnnv0wt
+${SESSID}          f9390b2ba0e2c7131b6f2e962686a826
+
+*** Keywords ***
+
+login KKAPI
+    ${output}=    Run    ${env2}/curl -k --silent -b "XSRF-TOKEN=${XSRF-TOKEN};TWWPHPSESSID=${SESSID}" -H "X-XSRF-TOKEN: ${XSRF-TOKEN}" -X POST -i "https://${kk_ip}/api/login.php" -d "uid=${account}&pwd=${pw}"
+    Log    ${output}   
+
+
+Get all my song
+    ${output}=    Run    ${env2}/curl -k --silent -b "XSRF-TOKEN=${XSRF-TOKEN};TWWPHPSESSID=${SESSID}" -H "X-XSRF-TOKEN: ${XSRF-TOKEN}" -X GET "https://${kk_ip}}/play/api/cpl_get_playlist.php?type=all"
+    Log      ${output}
+    ${object}=     Evaluate    json.loads('''${output}''')     json
+    Log      ${object}
+    Log      ${object["status"]}
