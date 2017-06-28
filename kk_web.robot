@@ -7,8 +7,8 @@ Suite Setup    Login KKbox player
 *** Variables ***
 
 ${kk_url}         https://www.kkbox.com/play/
-${kk_account}     0932208479
-${kk_password}    kkbox
+${kk_account}     0932208xxx
+${kk_password}    xxxxx
 
 
           
